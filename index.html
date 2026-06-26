@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서든 티어표</title>
+
+<style>
+
+body{
+    font-family:sans-serif;
+    background:linear-gradient(135deg,#ffd6f5,#d8b4fe);
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+
+    min-width:1200px;
+}
+
+table{
+    border-collapse:collapse;
+    background:white;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th,td{
+    width:140px;
+    height:50px;
+    border:2px solid #555;
+    text-align:center;
+    vertical-align:middle;
+    font-size:16px;
+    font-weight:700;
+}
+
+th{
+    color:white;
+}
+
+.tier1{
+    background:linear-gradient(135deg,#FFB3C1,#FF8FA3);
+	color:#444;
+}
+
+.tier2{
+    background:linear-gradient(135deg,#FFF3B0,#FFE082);
+    color:#444;
+}
+
+.tier3{
+    background:linear-gradient(135deg,#B3E5FC,#90CAF9);
+	color:#444;
+}
+
+.tier4{
+    background:linear-gradient(135deg,#DDD6FE,#C4B5FD);
+	color:#444;
+}
+
+.beginner{
+    background:linear-gradient(135deg,#FBCFE8,#F9A8D4);
+	color:#444;
+}
+
+.button-area{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.team-btn{
+    border:none;
+    border-radius:14px;
+    padding:12px 24px;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.map-btn{
+    background:linear-gradient(135deg,#34d399,#059669);
+}
+
+.random-btn{
+    background:linear-gradient(135deg,#60a5fa,#2563eb);
+}
+
+.balance-btn{
+    background:linear-gradient(135deg,#c084fc,#ec4899);
+}
+
+.reset-btn{
+    background:linear-gradient(135deg,#fda4af,#ef4444);
+}
+
+.map-buttons{
+    display:none;
+    justify-content:center;
+    gap:10px;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+.map-sub-btn{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    font-size:13px;
+}
+
+#mapResult{
+    margin-top:15px;
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    color:#222;
+}
+
+.result-title{
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    color:white;
+}
+
+.team-a{
+    background:#93c5fd;
+    color:#1e3a8a;
+}
+
+.team-b{
+    background:#f9a8d4;
+    color:#831843;
+}
+
+.roulette-box{
+    margin-top:10px;
+    padding:14px;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 8px 20px rgba(0,0,0,0.18);
+}
+
+.roulette-machine{
+    width:420px;
+    height:230px;
+    margin:15px auto 0;
+    background:#111827;
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+    overflow:hidden;
+    position:relative;
+    color:white;
+}
+
+.roulette-window{
+    height:170px;
+    overflow:hidden;
+    position:relative;
+    border-radius:14px;
+    background:#ffffff;
+}
+
+.roulette-list{
+    transition:transform 3.2s cubic-bezier(.12,.75,.16,1);
+}
+
+.roulette-item{
+    height:42px;
+    line-height:42px;
+    font-size:20px;
+    font-weight:900;
+    color:#222;
+}
+
+.roulette-center-line{
+    position:absolute;
+    top:64px;
+    left:0;
+    right:0;
+    height:42px;
+    border-top:3px solid #ec4899;
+    border-bottom:3px solid #ec4899;
+    background:rgba(236,72,153,0.12);
+    pointer-events:none;
+}
+
+.roulette-box{
+    margin-top:10px;
+    padding:14px;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 8px 20px rgba(0,0,0,0.18);
+}
+
+.roulette-title{
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:10px;
+    color:#7c3aed;
+}
+
+.roulette-final span{
+    display:inline-block;
+    margin:5px;
+    padding:8px 14px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#dbeafe,#fbcfe8);
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="left-panel">
+
+<table id="tierTable">
+
+<tr>
+<th class="tier1">1티어</th>
+<th class="tier2">2티어</th>
+<th class="tier3">3티어</th>
+<th class="tier4">4티어</th>
+<th class="beginner">서린이</th>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+<tr>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+</tr>
+
+</table>
+
+<div class="button-area">
+
+<button class="team-btn map-btn"
+onclick="toggleMapButtons()">
+🗺️ 맵선택
+</button>
+
+<button class="team-btn random-btn"
+onclick="randomTeams()">
+🎲 랜덤
+</button>
+
+<button class="team-btn balance-btn"
+onclick="balanceTeams()">
+⚖️ 밸런스
+</button>
+
+<button class="team-btn reset-btn"
+onclick="resetAll()">
+🗑️ 초기화
+</button>
+
+</div>
+
+<div id="mapButtons" class="map-buttons">
+
+<button class="team-btn map-sub-btn"
+onclick="randomMaps(2)">
+2개 랜덤
+</button>
+
+<button class="team-btn map-sub-btn"
+onclick="randomMaps(3)">
+3개 랜덤
+</button>
+
+<button class="team-btn map-sub-btn"
+onclick="randomMaps(999)">
+올 랜덤
+</button>
+
+</div>
+
+<div id="mapResult"></div>
+
+</div>
+
+<table>
+
+<tr>
+<th colspan="2" class="result-title">
+팀 결과
+</th>
+</tr>
+
+<tr>
+<th class="team-a">A팀</th>
+<th class="team-b">B팀</th>
+</tr>
+
+<tbody id="resultBody">
+
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBZznKP7BbN_u5dRdqENrHMhwR5kDfT0W8",
+    authDomain: "suddena-f6152.firebaseapp.com",
+    projectId: "suddena-f6152",
+    storageBucket: "suddena-f6152.firebasestorage.app",
+    messagingSenderId: "201596682214",
+    appId: "1:201596682214:web:11c2162d8d17610ba42027"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const roomRef = doc(db, "shared", "main");
+
+const cells = document.querySelectorAll("td[contenteditable='true']");
+const cols = 5;
+
+const mapList = [
+    "드래곤로드",
+    "프로방스",
+    "시티캣",
+    "크로스포트",
+    "올드타운",
+    "제3보급창고",
+    "듀오릭",
+    "펠리스",
+    "백어스",
+    "산악기지",
+    "마린베이스",
+    "이탈리아",
+    "아울렛",
+    "B2연구소",
+    "지하철",
+    "제5보급",
+    "화이트스콜",
+    "해양중계소",
+    "프로즌시티",
+    "골든아이",
+    "클럽나이트",	
+];
+
+function getTableData(){
+    return [...cells].map(c => c.innerText);
+}
+
+function setTableData(data){
+    cells.forEach((cell, i) => {
+        cell.innerText = data[i] || "";
+    });
+}
+
+async function saveState(extra = {}){
+    await setDoc(roomRef, {
+        cells: getTableData(),
+        mapResult: document.getElementById("mapResult").innerHTML,
+        ...extra
+    }, { merge:true });
+}
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function drawTeams(teamA, teamB){
+    const body = document.getElementById("resultBody");
+    body.innerHTML = "";
+
+    const rows = Math.max(teamA.length, teamB.length, 7);
+
+    for(let i = 0; i < rows; i++){
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${teamA[i] || ""}</td>
+            <td>${teamB[i] || ""}</td>
+        `;
+
+        body.appendChild(tr);
+    }
+}
+
+cells.forEach((cell, index) => {
+    cell.dataset.index = index;
+
+    cell.addEventListener("blur", () => {
+        saveState();
+    });
+
+    cell.addEventListener("keydown", (e) => {
+        let next = null;
+
+        switch(e.key){
+            case "ArrowRight": next = index + 1; break;
+            case "ArrowLeft": next = index - 1; break;
+            case "ArrowDown": next = index + cols; break;
+            case "ArrowUp": next = index - cols; break;
+            default: return;
+        }
+
+        e.preventDefault();
+
+        if(next >= 0 && next < cells.length){
+            cells[next].focus();
+        }
+    });
+});
+
+window.randomMaps = async function(type){
+
+    let fixedMaps = [];
+    let randomCount = 0;
+
+    if(type === 2){
+        fixedMaps = ["드래곤로드","프로방스","시티캣","크로스포트","올드타운"];
+        randomCount = 2;
+    }
+
+    if(type === 3){
+        fixedMaps = ["드래곤로드","프로방스","시티캣","크로스포트"];
+        randomCount = 3;
+    }
+
+    if(type === 999){
+        fixedMaps = [];
+        randomCount = 7;
+    }
+
+    const randomPool = mapList.filter(map => !fixedMaps.includes(map));
+    shuffle(randomPool);
+
+    const selected = [
+        ...fixedMaps,
+        ...randomPool.slice(0, randomCount)
+    ];
+
+    await setDoc(roomRef, {
+        cells: getTableData(),
+        teamA: [],
+        teamB: [],
+        mapRolling: true,
+        mapFinal: selected,
+        mapResult: "",
+        mapStep: 0,
+        mapStartTime: Date.now()
+    }, { merge:true });
+};
+
+window.randomTeams = async function(){
+    let players = [];
+
+    cells.forEach(c => {
+        const name = c.innerText.trim();
+        if(name) players.push(name);
+    });
+
+    shuffle(players);
+
+    const teamA = [];
+    const teamB = [];
+
+    players.forEach(player => {
+        if(teamA.length <= teamB.length && teamA.length < 7){
+            teamA.push(player);
+        }else if(teamB.length < 7){
+            teamB.push(player);
+        }
+    });
+
+    await saveState({
+        teamA,
+        teamB
+    });
+};
+
+window.balanceTeams = async function(){
+    const teamA = [];
+    const teamB = [];
+
+    const rows = document.querySelectorAll("#tierTable tr");
+
+    for(let col = 0; col < 5; col++){
+        let tier = [];
+
+        for(let row = 1; row < rows.length; row++){
+            const name = rows[row].children[col].innerText.trim();
+            if(name) tier.push(name);
+        }
+
+        shuffle(tier);
+
+        tier.forEach(player => {
+            if(teamA.length >= 7){
+                teamB.push(player);
+            }else if(teamB.length >= 7){
+                teamA.push(player);
+            }else if(teamA.length <= teamB.length){
+                teamA.push(player);
+            }else{
+                teamB.push(player);
+            }
+        });
+    }
+
+    await saveState({
+        teamA,
+        teamB
+    });
+};
+
+window.resetAll = async function(){
+
+    if(!confirm("초기화할까요?")) return;
+
+    document.getElementById("mapButtons").style.display = "none";
+
+    await setDoc(roomRef, {
+        cells:Array(35).fill(""),
+        teamA:[],
+        teamB:[],
+        mapRolling:false,
+        mapFinal:[],
+        mapResult:""
+    });
+};
+
+window.toggleMapButtons = function(){
+
+    const box = document.getElementById("mapButtons");
+
+    if(box.style.display === "flex"){
+        box.style.display = "none";
+    }else{
+        box.style.display = "flex";
+    }
+
+};
+
+onSnapshot(roomRef, (snap) => {
+
+    if(!snap.exists()) return;
+
+    const data = snap.data();
+
+    if(data.cells){
+        setTableData(data.cells);
+    }
+
+    drawTeams(
+        data.teamA || [],
+        data.teamB || []
+    );
+
+    if(data.mapRolling && data.mapFinal){
+
+        const finalMaps = data.mapFinal;
+        let picked = [];
+        let index = 0;
+
+        function renderRoulette(finalMaps, picked, currentIndex){
+
+            const resultBox = document.getElementById("mapResult");
+
+            const loopMaps = [];
+
+            for(let i = 0; i < 10; i++){
+                loopMaps.push(...mapList);
+            }
+
+            const target = finalMaps[currentIndex];
+            const targetIndex = loopMaps.lastIndexOf(target);
+
+            const itemHeight = 42;
+            const centerOffset = 64;
+            const moveY = targetIndex * itemHeight - centerOffset;
+
+            resultBox.innerHTML = `
+                <div class="roulette-machine">
+                    <div style="font-size:20px;font-weight:900;margin-bottom:10px;">
+                        🎰 ${currentIndex + 1}번째 맵 룰렛
+                    </div>
+
+                    <div class="roulette-window">
+                        <div class="roulette-list" id="rouletteList">
+                            ${loopMaps.map(m => `<div class="roulette-item">${m}</div>`).join("")}
+                        </div>
+                        <div class="roulette-center-line"></div>
+                    </div>
+                </div>
+
+                <div class="roulette-picked">
+                    확정된 맵:
+                    ${picked.length ? picked.join(" / ") : "아직 없음"}
+                </div>
+            `;
+
+            setTimeout(() => {
+                const list = document.getElementById("rouletteList");
+
+                if(list){
+                    list.style.transform =
+                        `translateY(-${moveY}px)`;
+                }
+            }, 80);
+        }
+
+        function spinOne(){
+
+            if(index >= finalMaps.length){
+
+                const finalHTML = `
+                    <div class="roulette-box">
+                        <div class="roulette-title">🎯 최종 맵</div>
+                        <div class="roulette-final">
+                            ${finalMaps.map(m => `<span>${m}</span>`).join("")}
+                        </div>
+                    </div>
+                `;
+
+                setDoc(roomRef, {
+                    mapRolling:false,
+                    mapResult:finalHTML
+                }, {merge:true});
+
+                return;
+            }
+
+            renderRoulette(finalMaps, picked, index);
+
+            setTimeout(() => {
+
+                picked.push(finalMaps[index]);
+
+                const resultBox = document.getElementById("mapResult");
+
+                resultBox.innerHTML = `
+                    <div class="roulette-box">
+                        <div class="roulette-title">
+                            ✨ ${finalMaps[index]} 확정!
+                        </div>
+                        <div class="roulette-final">
+                            ${picked.map(m => `<span>${m}</span>`).join("")}
+                        </div>
+                    </div>
+                `;
+
+                index++;
+
+                setTimeout(spinOne, 700);
+
+            }, 3600);
+        }
+
+        spinOne();
+
+    }else{
+
+        document.getElementById("mapResult").innerHTML =
+            data.mapResult || "";
+
+    }
+
+});
+</script>
+</body>
+</html>
