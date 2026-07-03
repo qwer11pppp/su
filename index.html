@@ -41,10 +41,11 @@ th,td{
 td[contenteditable="true"]{
     cursor:text;
     outline:none;
-    white-space:nowrap;
 }
 
-th{ color:white; }
+th{
+    color:white;
+}
 
 .tier1{ background:#FFC9C1; color:#444; }
 .tier2{ background:#FFF292; color:#444; }
@@ -103,6 +104,7 @@ th{ color:white; }
 .team-a{ background:#93c5fd; color:#1e3a8a; }
 .team-b{ background:#f9a8d4; color:#831843; }
 
+
 .roulette-box{
     margin-top:10px;
     padding:14px;
@@ -134,7 +136,6 @@ th{ color:white; }
 
 .roulette-list{
     transition:transform 5.5s cubic-bezier(0.02,0.95,0.1,1);
-    transform:translateY(0);
 }
 
 .roulette-item{
@@ -312,6 +313,12 @@ function getResultData(){
     return [...resultCells].map(c => c.innerText);
 }
 
+function saveCurrentResult(){
+    saveState({
+        resultCells:getResultData()
+    });
+}
+
 async function saveState(extra = {}){
     await setDoc(roomRef, {
         cells:getTableData(),
@@ -366,9 +373,7 @@ function attachResultEvents(){
     resultCells.forEach(cell => {
         cell.addEventListener("blur", () => {
             if(!isUpdatingFromServer){
-                saveState({
-                    resultCells:getResultData()
-                });
+                saveCurrentResult();
             }
         });
     });
@@ -524,8 +529,7 @@ window.resetAll = async function(){
         resultCells:Array(14).fill(""),
         mapRolling:false,
         mapFinal:[],
-        mapResult:"",
-        mapStartTime:0
+        mapResult:""
     });
 };
 
@@ -621,8 +625,6 @@ onSnapshot(roomRef, (snap) => {
                         </div>
                     </div>
                 `;
-
-                document.getElementById("mapResult").innerHTML = finalHTML;
 
                 setDoc(roomRef, {
                     mapRolling:false,
