@@ -6,7 +6,6 @@
 <title>서든 티어표</title>
 
 <style>
-
 body{
     font-family:sans-serif;
     background:linear-gradient(135deg,#ffd6f5,#d8b4fe);
@@ -18,7 +17,6 @@ body{
     display:flex;
     gap:40px;
     align-items:flex-start;
-
     min-width:1200px;
 }
 
@@ -40,34 +38,20 @@ th,td{
     font-weight:700;
 }
 
+td[contenteditable="true"]{
+    cursor:text;
+    outline:none;
+}
+
 th{
     color:white;
 }
 
-.tier1{
-    background:linear-gradient(135deg,#FFC9C1,#FFC9C1);
-	color:#444;
-}
-
-.tier2{
-    background:linear-gradient(135deg,#FFF292,#FFF292);
-    color:#444;
-}
-
-.tier3{
-    background:linear-gradient(135deg,#D9EAFE,#D9EAFE);
-	color:#444;
-}
-
-.tier4{
-    background:linear-gradient(135deg,#DDD6FE,#C4B5FD);
-	color:#444;
-}
-
-.beginner{
-    background:linear-gradient(135deg,#FBCFE8,#F9A8D4);
-	color:#444;
-}
+.tier1{ background:#FFC9C1; color:#444; }
+.tier2{ background:#FFF292; color:#444; }
+.tier3{ background:#D9EAFE; color:#444; }
+.tier4{ background:linear-gradient(135deg,#DDD6FE,#C4B5FD); color:#444; }
+.beginner{ background:linear-gradient(135deg,#FBCFE8,#F9A8D4); color:#444; }
 
 .button-area{
     display:flex;
@@ -86,21 +70,10 @@ th{
     font-weight:bold;
 }
 
-.map-btn{
-    background:linear-gradient(135deg,#34d399,#059669);
-}
-
-.random-btn{
-    background:linear-gradient(135deg,#60a5fa,#2563eb);
-}
-
-.balance-btn{
-    background:linear-gradient(135deg,#c084fc,#ec4899);
-}
-
-.reset-btn{
-    background:linear-gradient(135deg,#fda4af,#ef4444);
-}
+.map-btn{ background:linear-gradient(135deg,#34d399,#059669); }
+.random-btn{ background:linear-gradient(135deg,#60a5fa,#2563eb); }
+.balance-btn{ background:linear-gradient(135deg,#c084fc,#ec4899); }
+.reset-btn{ background:linear-gradient(135deg,#fda4af,#ef4444); }
 
 .map-buttons{
     display:none;
@@ -128,15 +101,9 @@ th{
     color:white;
 }
 
-.team-a{
-    background:#93c5fd;
-    color:#1e3a8a;
-}
+.team-a{ background:#93c5fd; color:#1e3a8a; }
+.team-b{ background:#f9a8d4; color:#831843; }
 
-.team-b{
-    background:#f9a8d4;
-    color:#831843;
-}
 
 .roulette-box{
     margin-top:10px;
@@ -191,14 +158,6 @@ th{
     pointer-events:none;
 }
 
-.roulette-box{
-    margin-top:10px;
-    padding:14px;
-    border-radius:18px;
-    background:white;
-    box-shadow:0 8px 20px rgba(0,0,0,0.18);
-}
-
 .roulette-title{
     font-size:20px;
     font-weight:900;
@@ -216,6 +175,7 @@ th{
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -223,7 +183,6 @@ th{
 <div class="left-panel">
 
 <table id="tierTable">
-
 <tr>
 <th class="tier1">1티어</th>
 <th class="tier2">2티어</th>
@@ -232,105 +191,26 @@ th{
 <th class="beginner">서린이</th>
 </tr>
 
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
-<tr>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-<td contenteditable="true"></td>
-</tr>
-
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
 </table>
 
 <div class="button-area">
-
-<button class="team-btn map-btn"
-onclick="toggleMapButtons()">
-🗺️ 맵선택
-</button>
-
-<button class="team-btn random-btn"
-onclick="randomTeams()">
-🎲 랜덤
-</button>
-
-<button class="team-btn balance-btn"
-onclick="balanceTeams()">
-⚖️ 밸런스
-</button>
-
-<button class="team-btn reset-btn"
-onclick="resetAll()">
-🗑️ 초기화
-</button>
-
+<button class="team-btn map-btn" onclick="toggleMapButtons()">🗺️ 맵선택</button>
+<button class="team-btn random-btn" onclick="randomTeams()">🎲 랜덤</button>
+<button class="team-btn balance-btn" onclick="balanceTeams()">⚖️ 밸런스</button>
+<button class="team-btn reset-btn" onclick="resetAll()">🗑️ 초기화</button>
 </div>
 
 <div id="mapButtons" class="map-buttons">
-
-<button class="team-btn map-sub-btn"
-onclick="randomMaps(2)">
-2개 랜덤
-</button>
-
-<button class="team-btn map-sub-btn"
-onclick="randomMaps(3)">
-3개 랜덤
-</button>
-
-<button class="team-btn map-sub-btn"
-onclick="randomMaps(999)">
-올 랜덤
-</button>
-
+<button class="team-btn map-sub-btn" onclick="randomMaps(2)">2개 랜덤</button>
+<button class="team-btn map-sub-btn" onclick="randomMaps(3)">3개 랜덤</button>
+<button class="team-btn map-sub-btn" onclick="randomMaps(999)">올 랜덤</button>
 </div>
 
 <div id="mapResult"></div>
@@ -338,11 +218,8 @@ onclick="randomMaps(999)">
 </div>
 
 <table>
-
 <tr>
-<th colspan="2" class="result-title">
-팀 결과
-</th>
+<th colspan="2" class="result-title">팀 결과</th>
 </tr>
 
 <tr>
@@ -351,17 +228,14 @@ onclick="randomMaps(999)">
 </tr>
 
 <tbody id="resultBody">
-
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
+<tr><td contenteditable="true"></td><td contenteditable="true"></td></tr>
 </tbody>
-
 </table>
 
 </div>
@@ -388,8 +262,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const roomRef = doc(db, "shared", "main");
 
-const cells = document.querySelectorAll("td[contenteditable='true']");
+const cells = document.querySelectorAll("#tierTable td[contenteditable='true']");
 const cols = 5;
+
+let isUpdatingFromServer = false;
+let rouletteRunning = false;
 
 const mapList = [
     "드래곤로드",
@@ -412,7 +289,7 @@ const mapList = [
     "해양중계소",
     "프로즌시티",
     "골든아이",
-    "클럽나이트",	
+    "클럽나이트"
 ];
 
 function getTableData(){
@@ -420,15 +297,33 @@ function getTableData(){
 }
 
 function setTableData(data){
+    isUpdatingFromServer = true;
+
     cells.forEach((cell, i) => {
-        cell.innerText = data[i] || "";
+        if(document.activeElement !== cell){
+            cell.innerText = data[i] || "";
+        }
+    });
+
+    isUpdatingFromServer = false;
+}
+
+function getResultData(){
+    const resultCells = document.querySelectorAll("#resultBody td[contenteditable='true']");
+    return [...resultCells].map(c => c.innerText);
+}
+
+function saveCurrentResult(){
+    saveState({
+        resultCells:getResultData()
     });
 }
 
 async function saveState(extra = {}){
     await setDoc(roomRef, {
-        cells: getTableData(),
-        mapResult: document.getElementById("mapResult").innerHTML,
+        cells:getTableData(),
+        resultCells:getResultData(),
+        mapResult:document.getElementById("mapResult").innerHTML,
         ...extra
     }, { merge:true });
 }
@@ -450,19 +345,47 @@ function drawTeams(teamA, teamB){
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
-            <td>${teamA[i] || ""}</td>
-            <td>${teamB[i] || ""}</td>
+            <td contenteditable="true">${teamA[i] || ""}</td>
+            <td contenteditable="true">${teamB[i] || ""}</td>
         `;
 
         body.appendChild(tr);
     }
+
+    attachResultEvents();
+}
+
+function drawResultCells(resultCells){
+    const teamA = [];
+    const teamB = [];
+
+    for(let i = 0; i < resultCells.length; i += 2){
+        teamA.push(resultCells[i] || "");
+        teamB.push(resultCells[i + 1] || "");
+    }
+
+    drawTeams(teamA, teamB);
+}
+
+function attachResultEvents(){
+    const resultCells = document.querySelectorAll("#resultBody td[contenteditable='true']");
+
+    resultCells.forEach(cell => {
+        cell.addEventListener("blur", () => {
+            if(!isUpdatingFromServer){
+                saveCurrentResult();
+            }
+        });
+    });
 }
 
 cells.forEach((cell, index) => {
     cell.dataset.index = index;
 
     cell.addEventListener("blur", () => {
-        saveState();
+        if(!isUpdatingFromServer){
+            saveState();
+        }
     });
 
     cell.addEventListener("keydown", (e) => {
@@ -484,8 +407,9 @@ cells.forEach((cell, index) => {
     });
 });
 
-window.randomMaps = async function(type){
+attachResultEvents();
 
+window.randomMaps = async function(type){
     let fixedMaps = [];
     let randomCount = 0;
 
@@ -512,13 +436,15 @@ window.randomMaps = async function(type){
         ...randomPool.slice(0, randomCount)
     ];
 
+    rouletteRunning = false;
+
     await setDoc(roomRef, {
-        cells: getTableData(),
-        mapRolling: true,
-        mapFinal: selected,
-        mapResult: "",
-        mapStep: 0,
-        mapStartTime: Date.now()
+        cells:getTableData(),
+        resultCells:getResultData(),
+        mapRolling:true,
+        mapFinal:selected,
+        mapResult:"",
+        mapStartTime:Date.now()
     }, { merge:true });
 };
 
@@ -543,9 +469,12 @@ window.randomTeams = async function(){
         }
     });
 
+    drawTeams(teamA, teamB);
+
     await saveState({
         teamA,
-        teamB
+        teamB,
+        resultCells:getResultData()
     });
 };
 
@@ -578,22 +507,26 @@ window.balanceTeams = async function(){
         });
     }
 
+    drawTeams(teamA, teamB);
+
     await saveState({
         teamA,
-        teamB
+        teamB,
+        resultCells:getResultData()
     });
 };
 
 window.resetAll = async function(){
-
     if(!confirm("초기화할까요?")) return;
 
     document.getElementById("mapButtons").style.display = "none";
+    rouletteRunning = false;
 
     await setDoc(roomRef, {
         cells:Array(35).fill(""),
         teamA:[],
         teamB:[],
+        resultCells:Array(14).fill(""),
         mapRolling:false,
         mapFinal:[],
         mapResult:""
@@ -601,7 +534,6 @@ window.resetAll = async function(){
 };
 
 window.toggleMapButtons = function(){
-
     const box = document.getElementById("mapButtons");
 
     if(box.style.display === "flex"){
@@ -609,11 +541,9 @@ window.toggleMapButtons = function(){
     }else{
         box.style.display = "flex";
     }
-
 };
 
 onSnapshot(roomRef, (snap) => {
-
     if(!snap.exists()) return;
 
     const data = snap.data();
@@ -622,21 +552,27 @@ onSnapshot(roomRef, (snap) => {
         setTableData(data.cells);
     }
 
-    drawTeams(
-        data.teamA || [],
-        data.teamB || []
-    );
+    const active = document.activeElement;
+    const editingResult = active && active.closest && active.closest("#resultBody");
+
+    if(!editingResult){
+        if(data.resultCells){
+            drawResultCells(data.resultCells);
+        }else{
+            drawTeams(data.teamA || [], data.teamB || []);
+        }
+    }
 
     if(data.mapRolling && data.mapFinal){
+        if(rouletteRunning) return;
+        rouletteRunning = true;
 
         const finalMaps = data.mapFinal;
         let picked = [];
         let index = 0;
 
         function renderRoulette(finalMaps, picked, currentIndex){
-
             const resultBox = document.getElementById("mapResult");
-
             const loopMaps = [];
 
             for(let i = 0; i < 10; i++){
@@ -674,16 +610,13 @@ onSnapshot(roomRef, (snap) => {
                 const list = document.getElementById("rouletteList");
 
                 if(list){
-                    list.style.transform =
-                        `translateY(-${moveY}px)`;
+                    list.style.transform = `translateY(-${moveY}px)`;
                 }
             }, 80);
         }
 
         function spinOne(){
-
             if(index >= finalMaps.length){
-
                 const finalHTML = `
                     <div class="roulette-box">
                         <div class="roulette-title">🎯 최종 맵</div>
@@ -698,13 +631,13 @@ onSnapshot(roomRef, (snap) => {
                     mapResult:finalHTML
                 }, {merge:true});
 
+                rouletteRunning = false;
                 return;
             }
 
             renderRoulette(finalMaps, picked, index);
 
             setTimeout(() => {
-
                 picked.push(finalMaps[index]);
 
                 const resultBox = document.getElementById("mapResult");
@@ -730,13 +663,11 @@ onSnapshot(roomRef, (snap) => {
         spinOne();
 
     }else{
-
-        document.getElementById("mapResult").innerHTML =
-            data.mapResult || "";
-
+        rouletteRunning = false;
+        document.getElementById("mapResult").innerHTML = data.mapResult || "";
     }
-
 });
 </script>
+
 </body>
 </html>
