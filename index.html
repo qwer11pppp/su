@@ -43,9 +43,7 @@ td[contenteditable="true"]{
     outline:none;
 }
 
-th{
-    color:white;
-}
+th{ color:white; }
 
 .tier1{ background:#FFC9C1; color:#444; }
 .tier2{ background:#FFF292; color:#444; }
@@ -104,6 +102,11 @@ th{
 .team-a{ background:#93c5fd; color:#1e3a8a; }
 .team-b{ background:#f9a8d4; color:#831843; }
 
+#resultBody td{
+    width:140px;
+    min-width:140px;
+    white-space:nowrap;
+}
 
 .roulette-box{
     margin-top:10px;
@@ -135,7 +138,7 @@ th{
 }
 
 .roulette-list{
-    transition:transform 5.5s cubic-bezier(0.02,0.95,0.1,1);
+    transform:translateY(0);
 }
 
 .roulette-item{
@@ -266,7 +269,12 @@ const cells = document.querySelectorAll("#tierTable td[contenteditable='true']")
 const cols = 5;
 
 let isUpdatingFromServer = false;
-let rouletteRunning = false;
+let rouletteTimers = [];
+let currentRouletteKey = "";
+
+const SPIN_TIME = 5800;
+const WAIT_TIME = 700;
+const ONE_MAP_TIME = SPIN_TIME + WAIT_TIME;
 
 const mapList = [
     "드래곤로드",
@@ -311,12 +319,6 @@ function setTableData(data){
 function getResultData(){
     const resultCells = document.querySelectorAll("#resultBody td[contenteditable='true']");
     return [...resultCells].map(c => c.innerText);
-}
-
-function saveCurrentResult(){
-    saveState({
-        resultCells:getResultData()
-    });
 }
 
 async function saveState(extra = {}){
@@ -373,7 +375,9 @@ function attachResultEvents(){
     resultCells.forEach(cell => {
         cell.addEventListener("blur", () => {
             if(!isUpdatingFromServer){
-                saveCurrentResult();
+                saveState({
+                    resultCells:getResultData()
+                });
             }
         });
     });
@@ -409,6 +413,132 @@ cells.forEach((cell, index) => {
 
 attachResultEvents();
 
+function clearRouletteTimers(){
+    rouletteTimers.forEach(t => clearTimeout(t));
+    rouletteTimers = [];
+}
+
+function addTimer(fn, time){
+    const timer = setTimeout(fn, time);
+    rouletteTimers.push(timer);
+}
+
+function getFinalHTML(finalMaps){
+    return `
+        <div class="roulette-box">
+            <div class="roulette-title">🎯 최종 맵</div>
+            <div class="roulette-final">
+                ${finalMaps.map(m => `<span>${m}</span>`).join("")}
+            </div>
+        </div>
+    `;
+}
+
+function renderSpinning(finalMaps, picked, currentIndex, phaseTime){
+    const resultBox = document.getElementById("mapResult");
+
+    const loopMaps = [];
+    for(let i = 0; i < 10; i++){
+        loopMaps.push(...mapList);
+    }
+
+    const target = finalMaps[currentIndex];
+    const targetIndex = loopMaps.lastIndexOf(target);
+
+    const itemHeight = 42;
+    const centerOffset = 64;
+    const moveY = targetIndex * itemHeight - centerOffset;
+
+    const remainTime = Math.max(0, SPIN_TIME - phaseTime);
+
+    resultBox.innerHTML = `
+        <div class="roulette-machine">
+            <div style="font-size:20px;font-weight:900;margin-bottom:10px;">
+                🎰 ${currentIndex + 1}번째 맵 룰렛
+            </div>
+
+            <div class="roulette-window">
+                <div class="roulette-list" id="rouletteList">
+                    ${loopMaps.map(m => `<div class="roulette-item">${m}</div>`).join("")}
+                </div>
+                <div class="roulette-center-line"></div>
+            </div>
+        </div>
+
+        <div class="roulette-picked">
+            확정된 맵:
+            ${picked.length ? picked.join(" / ") : "아직 없음"}
+        </div>
+    `;
+
+    const list = document.getElementById("rouletteList");
+
+    if(list){
+        list.style.transition = "none";
+        list.style.transform = "translateY(0)";
+
+        setTimeout(() => {
+            list.style.transition = `transform ${remainTime}ms cubic-bezier(0.02,0.95,0.1,1)`;
+            list.style.transform = `translateY(-${moveY}px)`;
+        }, 50);
+    }
+}
+
+function renderConfirmed(finalMaps, picked, currentIndex){
+    const resultBox = document.getElementById("mapResult");
+
+    resultBox.innerHTML = `
+        <div class="roulette-box">
+            <div class="roulette-title">
+                ✨ ${finalMaps[currentIndex]} 확정!
+            </div>
+            <div class="roulette-final">
+                ${picked.map(m => `<span>${m}</span>`).join("")}
+            </div>
+        </div>
+    `;
+}
+
+function runSyncedRoulette(finalMaps, startTime){
+    clearRouletteTimers();
+
+    const totalTime = finalMaps.length * ONE_MAP_TIME;
+    const now = Date.now();
+    const elapsed = now - startTime;
+
+    if(elapsed >= totalTime){
+        const finalHTML = getFinalHTML(finalMaps);
+        document.getElementById("mapResult").innerHTML = finalHTML;
+
+        setDoc(roomRef, {
+            mapRolling:false,
+            mapResult:finalHTML
+        }, { merge:true });
+
+        return;
+    }
+
+    const currentIndex = Math.floor(elapsed / ONE_MAP_TIME);
+    const phaseTime = elapsed % ONE_MAP_TIME;
+    const picked = finalMaps.slice(0, currentIndex);
+
+    if(phaseTime < SPIN_TIME){
+        renderSpinning(finalMaps, picked, currentIndex, phaseTime);
+
+        addTimer(() => {
+            runSyncedRoulette(finalMaps, startTime);
+        }, SPIN_TIME - phaseTime + 50);
+
+    }else{
+        const confirmedPicked = finalMaps.slice(0, currentIndex + 1);
+        renderConfirmed(finalMaps, confirmedPicked, currentIndex);
+
+        addTimer(() => {
+            runSyncedRoulette(finalMaps, startTime);
+        }, ONE_MAP_TIME - phaseTime + 50);
+    }
+}
+
 window.randomMaps = async function(type){
     let fixedMaps = [];
     let randomCount = 0;
@@ -436,7 +566,10 @@ window.randomMaps = async function(type){
         ...randomPool.slice(0, randomCount)
     ];
 
-    rouletteRunning = false;
+    const startTime = Date.now() + 500;
+
+    currentRouletteKey = "";
+    clearRouletteTimers();
 
     await setDoc(roomRef, {
         cells:getTableData(),
@@ -444,7 +577,7 @@ window.randomMaps = async function(type){
         mapRolling:true,
         mapFinal:selected,
         mapResult:"",
-        mapStartTime:Date.now()
+        mapStartTime:startTime
     }, { merge:true });
 };
 
@@ -520,7 +653,8 @@ window.resetAll = async function(){
     if(!confirm("초기화할까요?")) return;
 
     document.getElementById("mapButtons").style.display = "none";
-    rouletteRunning = false;
+    currentRouletteKey = "";
+    clearRouletteTimers();
 
     await setDoc(roomRef, {
         cells:Array(35).fill(""),
@@ -529,7 +663,8 @@ window.resetAll = async function(){
         resultCells:Array(14).fill(""),
         mapRolling:false,
         mapFinal:[],
-        mapResult:""
+        mapResult:"",
+        mapStartTime:0
     });
 };
 
@@ -563,107 +698,17 @@ onSnapshot(roomRef, (snap) => {
         }
     }
 
-    if(data.mapRolling && data.mapFinal){
-        if(rouletteRunning) return;
-        rouletteRunning = true;
+    if(data.mapRolling && data.mapFinal && data.mapStartTime){
+        const key = `${data.mapStartTime}_${data.mapFinal.join("|")}`;
 
-        const finalMaps = data.mapFinal;
-        let picked = [];
-        let index = 0;
-
-        function renderRoulette(finalMaps, picked, currentIndex){
-            const resultBox = document.getElementById("mapResult");
-            const loopMaps = [];
-
-            for(let i = 0; i < 10; i++){
-                loopMaps.push(...mapList);
-            }
-
-            const target = finalMaps[currentIndex];
-            const targetIndex = loopMaps.lastIndexOf(target);
-
-            const itemHeight = 42;
-            const centerOffset = 64;
-            const moveY = targetIndex * itemHeight - centerOffset;
-
-            resultBox.innerHTML = `
-                <div class="roulette-machine">
-                    <div style="font-size:20px;font-weight:900;margin-bottom:10px;">
-                        🎰 ${currentIndex + 1}번째 맵 룰렛
-                    </div>
-
-                    <div class="roulette-window">
-                        <div class="roulette-list" id="rouletteList">
-                            ${loopMaps.map(m => `<div class="roulette-item">${m}</div>`).join("")}
-                        </div>
-                        <div class="roulette-center-line"></div>
-                    </div>
-                </div>
-
-                <div class="roulette-picked">
-                    확정된 맵:
-                    ${picked.length ? picked.join(" / ") : "아직 없음"}
-                </div>
-            `;
-
-            setTimeout(() => {
-                const list = document.getElementById("rouletteList");
-
-                if(list){
-                    list.style.transform = `translateY(-${moveY}px)`;
-                }
-            }, 80);
+        if(currentRouletteKey !== key){
+            currentRouletteKey = key;
+            runSyncedRoulette(data.mapFinal, data.mapStartTime);
         }
-
-        function spinOne(){
-            if(index >= finalMaps.length){
-                const finalHTML = `
-                    <div class="roulette-box">
-                        <div class="roulette-title">🎯 최종 맵</div>
-                        <div class="roulette-final">
-                            ${finalMaps.map(m => `<span>${m}</span>`).join("")}
-                        </div>
-                    </div>
-                `;
-
-                setDoc(roomRef, {
-                    mapRolling:false,
-                    mapResult:finalHTML
-                }, {merge:true});
-
-                rouletteRunning = false;
-                return;
-            }
-
-            renderRoulette(finalMaps, picked, index);
-
-            setTimeout(() => {
-                picked.push(finalMaps[index]);
-
-                const resultBox = document.getElementById("mapResult");
-
-                resultBox.innerHTML = `
-                    <div class="roulette-box">
-                        <div class="roulette-title">
-                            ✨ ${finalMaps[index]} 확정!
-                        </div>
-                        <div class="roulette-final">
-                            ${picked.map(m => `<span>${m}</span>`).join("")}
-                        </div>
-                    </div>
-                `;
-
-                index++;
-
-                setTimeout(spinOne, 700);
-
-            }, 5800);
-        }
-
-        spinOne();
 
     }else{
-        rouletteRunning = false;
+        currentRouletteKey = "";
+        clearRouletteTimers();
         document.getElementById("mapResult").innerHTML = data.mapResult || "";
     }
 });
